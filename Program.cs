@@ -6,7 +6,11 @@ namespace ttc_wtc
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.Title = "Tokyo Tarot Cards : When They Cry";
+            Console.CursorVisible = false;
+            Console.SetWindowSize(90, 34);
+            Console.SetBufferSize(90, 34);
+            CollectedMaps.Initialise();
         }
     }
 }
