@@ -11,6 +11,7 @@ namespace ttc_wtc
             Console.SetWindowSize(90, 34);
             Console.SetBufferSize(90, 34);
             CollectedMaps.Initialise();
+            Draw.DrawMap(HelpFunctions.MT(CollectedMaps.AllMaps[0].drawnMap));
         }
     }
 }

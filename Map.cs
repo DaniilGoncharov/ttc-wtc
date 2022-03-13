@@ -17,24 +17,29 @@ namespace ttc_wtc
         }
     }
 
-    public class Map
+    /*public*/ class Map
     {
         public string name;
         public int[,] transitionTo;
         public char[,] drawnMap;
         public bool[,] passable;
         public Point[] transitionCoords;
+        public Entity[,] Entities;
+        public Chest[,] Chests;
 
         public Map(string[] map, int numberOfMaps)
         {
-            int[] connections = MapSolver.ConnectionSolver(map[map.Length - 2]);
+            map = HelpFunctions.MST(map);
+            int[] connections = MapSolver.ConnectionSolver(map[^2]);
             int sizex = map.Length - 1;
             int sizey = 0;
-            for (int i = 0; i < sizex - 1; i++) 
+            for (int i = 0; i < sizex - 1; i++)
+            {
                 sizey = sizey < map[i].Length ? map[i].Length : sizey;
+            }
             transitionCoords = new Point[numberOfMaps + 1];
-            //chests = new Chest[sizex, sizey];
-            //entities = new Entity[sizex, sizey];
+            Chests = new Chest[sizex, sizey];
+            Entities = new Entity[sizex, sizey];
             transitionTo = new int[sizex, sizey];
             for (int i = 0; i < sizex; i++)
             {
@@ -45,7 +50,7 @@ namespace ttc_wtc
             }
             drawnMap = new char[sizex, sizey];
             passable = new bool[sizex, sizey];
-            name = map[map.Length - 1];
+            name = map[^1];
             drawnMap = MapSolver.MapSplitter(map, sizey, transitionTo, connections, passable);
         }
     }
