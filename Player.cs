@@ -12,16 +12,32 @@ namespace ttc_wtc
 
         public List<Item> Items;
         public PutOnItem[] EquippedItems { get; set; }
+        public int TarotNumber { get; set; }
 
-        public Player(string name, int hp, int damage, int defense, int mapId, int x, int y, int tarotNumber = 0) :
+        public Player(string name, int hp, int damage, int defense, int mapId, int x, int y) :
                  base(name, hp, damage, defense, mapId, x, y, '@')
         {
             Items = new List<Item>();
             EquippedItems = new PutOnItem[5];
-            Draw.currentMapId = MapId;
+            Draw.CurrentMapId = MapId;
+            TarotNumber = -1;
         }
 
-        public List<string> GetInventoryNames()
+        public Player() : base("Player", 0, 0, 0, 0, 6, 6, '@') { }
+
+        public void SelectTarot(int tarotNumber)
+        {
+            if (TarotNumber == -1)
+            {
+                TarotNumber = tarotNumber;
+                Tarot.Initialise();
+                HP = (Tarot.Tarots[tarotNumber].HP, Tarot.Tarots[tarotNumber].HP);
+                Damage = (Tarot.Tarots[tarotNumber].Damage, Tarot.Tarots[tarotNumber].Damage);
+                Defense = (Tarot.Tarots[tarotNumber].Defense, Tarot.Tarots[tarotNumber].Defense);
+            }
+        }
+
+        public List<string> GetInventorySlotNames()
         {
             List<string> result = new List<string>();
             for (int i = 0; i < EquippedItems.Length; i++)

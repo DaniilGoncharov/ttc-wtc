@@ -22,5 +22,20 @@ namespace ttc_wtc
                 NPCInventory = new List<Item>();
             }
         }
+
+        public List<string> GetTiefsItemNames()
+        {
+            List<string> TiefsItemsName = new List<string>();
+            for (int i = 0; i < NPCInventory.Count; i++)
+            {
+                TiefsItemsName.Add(NPCInventory[i].Name);
+            }
+            if (NPCInventory.Count > 0)
+            {
+                TiefsItemsName.Add("Забрать все");
+            }
+            TiefsItemsName.Add("Выйти");
+            return TiefsItemsName;
+        }
     }
 }

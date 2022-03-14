@@ -10,7 +10,7 @@ namespace ttc_wtc
     {
         public const int xOffSet = 5;
         public const int yOffSet = 2;
-        public static int currentMapId;
+        public static int CurrentMapId { get; set; }
 
         public static void DrawMap(char[,] map)
         {
@@ -67,7 +67,7 @@ namespace ttc_wtc
             Console.ResetColor();
         }
 
-        /*public static void ReDrawMap(char[,] drawnMap, int mapId)
+        public static void ReDrawMap(char[,] drawnMap, int mapId)
         {
             Console.Clear();
             DrawMap(HelpFunctions.MT(drawnMap));
@@ -75,7 +75,7 @@ namespace ttc_wtc
             {
                 DrawAtPos(entity.X, entity.Y, entity.Symbol);
             }
-        }*/
+        }
 
         public static void DrawMapInterface(Player player, int x, int y)
         {
@@ -104,11 +104,11 @@ namespace ttc_wtc
                 Console.WriteLine("ЗАЩИТА:{0}", enemy[i].Defense.CurrentDefense);
             }
             Console.SetCursorPosition(1, 30);
-            Console.WriteLine("УРОН:{0}", player.Damage);
+            Console.WriteLine("УРОН:{0}", player.Damage.CurrentDamage);
             Console.SetCursorPosition(1, 31);
             Console.WriteLine("ЗДОРОВЬЕ:{0}/{1}", player.HP.CurrentHP, player.HP.MaximumHP);
             Console.SetCursorPosition(1, 32);
-            Console.WriteLine("ЗАЩИТА:{0}", player.Defense);
+            Console.WriteLine("ЗАЩИТА:{0}", player.Defense.CurrentDefense);
         }
     }
 }

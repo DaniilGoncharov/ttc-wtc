@@ -52,5 +52,18 @@ namespace ttc_wtc
         {
             return Items.Count;
         }
+
+        public void AddItem(Item item)
+        {
+            Items.Add(item);
+        }
+
+        public void AddItems(Item[] items)
+        {
+            foreach(Item item in items)
+            {
+                AddItem(item);
+            }
+        }
     }
 }

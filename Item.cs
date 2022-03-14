@@ -9,9 +9,11 @@ namespace ttc_wtc
     class Item
     {
         public string Name { get; set; }
+
         public Item (string name)
         {
             Name = name;
         }
+        public static Item[] Items = new Item[] { };
     }
 }

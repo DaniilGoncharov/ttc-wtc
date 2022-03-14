@@ -139,5 +139,86 @@ namespace ttc_wtc
             AllMaps[mapId].Entities[x, y] = null;
             AllMaps[mapId].passable[x, y] = true;
         }
+
+        public static Item GetItemFromNPC(int mapId, int x, int y, int index)
+        {
+            NPC Npc = (NPC)AllMaps[mapId].Entities[x, y];
+            Item result = Npc.NPCInventory[index];
+            Npc.NPCInventory.RemoveAt(index);
+            return result;
+        }
+
+        public static Item[] GetAllItemsFromNPC(int mapId, int x, int y)
+        {
+            NPC Npc = (NPC)AllMaps[mapId].Entities[x, y];
+            Item[] result = new Item[Npc.NPCInventory.Count];
+            for (int i = 0; i < result.Length; i++)
+            {
+                result[i] = GetItemFromNPC(mapId, x, y, 0);
+            }
+            Npc.GetTiefsItemNames().RemoveAt(0);
+            return result;
+        }
+
+        public static void MoveEntity(int mapId, int x, int y, int moveX, int moveY, Entity entity)
+        {
+            DelEntity(mapId, x, y);
+            SetEntity(mapId, x + moveX, y + moveY, entity);
+        }
+
+        public static List<Entity> GetEntities(int mapId)
+        {
+            List<Entity> result = new List<Entity>();
+            foreach (Entity entity in AllMaps[mapId].Entities)
+                if (entity != null)
+                    result.Add(entity);
+            return result;
+        }
+
+        public static Entity GetEntity(int mapId, int x, int y)
+        {
+            return AllMaps[mapId].Entities[x, y];
+        }
+
+        public static Entity[] GetNearEntities(int mapId, int x, int y)
+        {
+            List<Entity> pResult = new List<Entity>();
+            for (int i = -1; i < 2; i++)
+            {
+                for (int j = -1; j < 2; j++)
+                {
+                    if (AllMaps[mapId].Entities[x + i, y + j] is Enemy)
+                    {
+                        pResult.Add(AllMaps[mapId].Entities[x + i, y + j]);
+                    }
+                }
+            }
+            Entity[] result = new Entity[pResult.Count];
+            for (int i = 0; i < result.Length; i++)
+            {
+                result[i] = pResult[i];
+            }
+            return result;
+        }
+
+        public static void EnemyMovement(int mapId, int x, int y)
+        {
+            Entity[,] currentMapEntities = AllMaps[mapId].Entities;
+            List<Entity> entitiesToMove = new List<Entity>();
+            for (int i = 0; i < currentMapEntities.GetLength(0); i++)
+            {
+                for (int j = 0; j < currentMapEntities.GetLength(1); j++)
+                {
+                    if (currentMapEntities[i, j] is Enemy)
+                    {
+                        entitiesToMove.Add(currentMapEntities[i, j]);
+                    }
+                }
+            }
+            foreach (Entity entity in entitiesToMove)
+            {
+                entity.MoveTowards(x, y);
+            }
+        }
     }
 }
