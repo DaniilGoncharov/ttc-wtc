@@ -22,6 +22,33 @@ namespace ttc_wtc
         static public void Initialise()
         {
             AllMaps = MapSolver.MapCollector();
+            AllMaps[0].transitionCoords[2] = new Point(1, 1);
+            AllMaps[0].transitionTo[1, 1] = 2;
+            AllMaps[0].drawnMap[1, 1] = 'E';
+            Map Dungeon = Generation.GenerateMap();
+            AllMaps.Add(Dungeon);
+            Point corner = GetCornerCoords(AllMaps.Count - 1);
+            AllMaps[AllMaps.Count - 1].transitionCoords[3] = corner;
+            AllMaps[AllMaps.Count - 1].transitionTo[corner.x, corner.y] = 3;
+            AllMaps[AllMaps.Count - 1].drawnMap[corner.x, corner.y] = 'E';
+            Map Dungeon2 = Generation.GenerateMap();
+            AllMaps.Add(Dungeon2);
+        }
+
+        static public Point GetCornerCoords(int mapId)
+        {
+            char[,] map = AllMaps[mapId].drawnMap;
+            for(int i = map.GetLength(0) - 1; i > 0; i--)
+            {
+                for(int j = map.GetLength(1) - 1; j > 0; j--)
+                {
+                    if (map[i, j] != '#' && map[i, j] != 'C' && map[i, j] != ' ')
+                    {
+                        return new Point(i, j);
+                    }
+                }
+            }
+            return new Point(0, 0);
         }
 
         static public char[,] GetDrawnMap(int mapId)
@@ -193,12 +220,7 @@ namespace ttc_wtc
                     }
                 }
             }
-            Entity[] result = new Entity[pResult.Count];
-            for (int i = 0; i < result.Length; i++)
-            {
-                result[i] = pResult[i];
-            }
-            return result;
+            return pResult.ToArray();
         }
 
         public static void EnemyMovement(int mapId, int x, int y)

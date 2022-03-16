@@ -28,15 +28,15 @@ namespace ttc_wtc
         {
             Tarot theFool = new Tarot(2500, 5, 100, (Player player, Entity[] entities, int numberOfEnemy) =>
             {
-                entities[numberOfEnemy].GetDamaged(300);
-            });
-
-            Tarot magician = new Tarot(3000, 20, 50, (Player player, Entity[] entities, int numberOfEnemy) =>
-            {
                 foreach (Entity entity in entities)
                 {
                     entity.GetDamaged(200);
                 }
+            });
+
+            Tarot silverChariot = new Tarot(3000, 20, 50, (Player player, Entity[] entities, int numberOfEnemy) =>
+            {
+                entities[numberOfEnemy].GetDamaged(500, true);
             });
 
             Tarot ZAWARUDO = new Tarot(2000, 15, 200, (Player player, Entity[] entities, int numberOfEnemy) =>
@@ -47,7 +47,7 @@ namespace ttc_wtc
                 }
             });
 
-            Tarots = new List<Tarot> { theFool, magician, ZAWARUDO };
+            Tarots = new List<Tarot> { theFool, silverChariot, ZAWARUDO };
         }
     }
 }

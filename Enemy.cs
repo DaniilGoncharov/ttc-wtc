@@ -8,7 +8,7 @@ namespace ttc_wtc
 {
     class Enemy : Entity
     {
-        public Enemy(string name, int hp, int damage, int defense, int mapId, int x, int y, int tarotNumber = 0) :
+        public Enemy(string name, int hp, int damage, int defense, int mapId, int x, int y) :
                  base(name, hp, damage, defense, mapId, x, y, '$')
         { }
     }

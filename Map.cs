@@ -17,7 +17,8 @@ namespace ttc_wtc
         }
     }
 
-    /*public*/ class Map
+    /*public*/
+    class Map
     {
         public string name;
         public int[,] transitionTo;
@@ -53,5 +54,62 @@ namespace ttc_wtc
             name = map[^1];
             drawnMap = MapSolver.MapSplitter(map, sizey, transitionTo, connections, passable);
         }
+
+        public Map(char[,] tiles, int numberOfMaps)
+        {
+            int sizeX = tiles.GetLength(0);
+            int sizeY = tiles.GetLength(1);
+            passable = new bool[sizeX, sizeY];
+            Chests = new Chest[sizeX, sizeY];
+            Entities = new Entity[sizeX, sizeY];
+            for (int i = 0; i < sizeX; i++)
+            {
+                for (int j = 0; j < sizeY; j++)
+                {
+                    if (tiles[i, j] == '#' || tiles[i, j] == ' ')
+                    {
+                        passable[i, j] = false;
+                    }
+                    else
+                    {
+                        passable[i, j] = true;
+                    }
+                    if (tiles[i, j] == '$')
+                    {
+                        Entities[i, j] = new Enemy("Вейн", 1000, 50, 4, CollectedMaps.AllMaps.Count(), i, j);
+                        tiles[i, j] = '.';
+                    }
+                    else if (tiles[i, j] == 'C')
+                    {
+                        Chests[i, j] = new Chest(3, i, j);
+                        passable[i, j] = false;
+                    }
+                }
+            }
+            transitionCoords = new Point[numberOfMaps + 1];
+            drawnMap = tiles;
+            drawnMap[1, 1] = 'E';
+            transitionTo = new int[sizeX, sizeY];
+            for (int i = 0; i < sizeX; i++)
+            {
+                for (int j = 0; j < sizeY; j++)
+                {
+                    transitionTo[i, j] = -1;
+                }
+            }
+            if (CollectedMaps.AllMaps.Count == 2)
+            {
+                transitionTo[1, 1] = 0;
+                transitionCoords[0] = new Point(1, 1);
+            }
+            else
+            {
+                transitionTo[1, 1] = 2;
+                transitionCoords[2] = new Point(1, 1);
+            }
+            name = "Данж";
+        }
+
+
     }
 }

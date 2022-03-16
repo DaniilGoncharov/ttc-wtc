@@ -45,12 +45,14 @@ namespace ttc_wtc
                 }
                 else if (this is Enemy)
                 {
-                    if (gameStatus == (int)Game.Status.InBattleForEntity) Program.CurrentGame.GameStatus = Game.Status.InBattle;
+                    if (gameStatus == (int)Game.Status.InBattleForEntity)
+                    {
+                        Program.CurrentGame.GameStatus = Game.Status.InBattle;
+                    }
                 }
                 return false;
             }
-            if (startingMapId != MapId) return false;
-            return true;
+            return startingMapId == MapId;
         }
 
         public void MoveTowards(int x, int y)
