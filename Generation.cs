@@ -193,9 +193,9 @@ namespace ttc_wtc
         {
             return IntToCharMap(PlaceEnemies(CleanInt(Generate(sizeX, sizeY)), 5));
         }
-        public static Map GenerateMap()
+        public static Map GenerateMap(bool endless)
         {
-            return new Map(IntToCharMap(PlaceEnemies(CleanInt(Generate(20, 23)), 1)), 4);
+            return new Map(IntToCharMap(PlaceEnemies(CleanInt(Generate(20, 23)), 0)), 4, endless);
         }
     }
 }

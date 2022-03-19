@@ -9,9 +9,12 @@ namespace ttc_wtc
     class Weapon : PutOnItem
     {
         public int Damage { get; set; }
-        public Weapon(string name, PutOnItem.Slot equippmentSlot, int damage) : base(name, equippmentSlot)
+        public int Defense { get; set; }
+
+        public Weapon(string name, PutOnItem.Slot equippmentSlot, int damage, int defense) : base(name, equippmentSlot)
         {
             Damage = damage;
+            Defense = defense;
         }
     }
 }

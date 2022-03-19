@@ -17,7 +17,6 @@ namespace ttc_wtc
         }
     }
 
-    /*public*/
     class Map
     {
         public string name;
@@ -55,7 +54,7 @@ namespace ttc_wtc
             drawnMap = MapSolver.MapSplitter(map, sizey, transitionTo, connections, passable);
         }
 
-        public Map(char[,] tiles, int numberOfMaps)
+        public Map(char[,] tiles, int numberOfMaps, bool endless)
         {
             int sizeX = tiles.GetLength(0);
             int sizeY = tiles.GetLength(1);
@@ -81,14 +80,28 @@ namespace ttc_wtc
                     }
                     else if (tiles[i, j] == 'C')
                     {
-                        Chests[i, j] = new Chest(3, i, j);
+                        Chest chest = new Chest(3, i, j);
+                        if (!endless)
+                        {
+                            if (CollectedMaps.AllMaps.Count() == 2)
+                            {
+                                chest.AddItem(Item.HeroesSword);
+                                chest.AddItem(Item.HealPotion);
+                            }
+                            else
+                            {
+                                chest.AddItem(Item.OldHelmet);
+                                chest.AddItem(Item.OldBreastPlate);
+                                chest.AddItem(Item.OldGreave);
+                            }
+                        }
+                        Chests[i, j] = chest;
                         passable[i, j] = false;
                     }
                 }
             }
             transitionCoords = new Point[numberOfMaps + 1];
             drawnMap = tiles;
-            drawnMap[1, 1] = 'E';
             transitionTo = new int[sizeX, sizeY];
             for (int i = 0; i < sizeX; i++)
             {
@@ -97,15 +110,19 @@ namespace ttc_wtc
                     transitionTo[i, j] = -1;
                 }
             }
-            if (CollectedMaps.AllMaps.Count == 2)
+            if (!endless)
             {
-                transitionTo[1, 1] = 0;
-                transitionCoords[0] = new Point(1, 1);
-            }
-            else
-            {
-                transitionTo[1, 1] = 2;
-                transitionCoords[2] = new Point(1, 1);
+                drawnMap[1, 1] = 'E';
+                if (CollectedMaps.AllMaps.Count == 2)
+                {
+                    transitionTo[1, 1] = 0;
+                    transitionCoords[0] = new Point(1, 1);
+                }
+                else
+                {
+                    transitionTo[1, 1] = 2;
+                    transitionCoords[2] = new Point(1, 1);
+                }
             }
             name = "Данж";
         }

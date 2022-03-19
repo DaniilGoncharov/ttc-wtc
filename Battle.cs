@@ -50,10 +50,9 @@ namespace ttc_wtc
                             break;
                         case 2:
                             List<string> items = Player.GetNamesBySlot(Consumable.ConsumableSlot);
-                            //items.Add("Назад");
                             Menu consumableMenu = new Menu(items);
                             int consumableChoice = consumableMenu.GetChoice();
-                            if (consumableChoice < items.Count - 2)
+                            if (consumableChoice > 0)
                             {
                                 Player.ChangeItemByChoice(consumableChoice, Consumable.ConsumableSlot);
                                 end = true;
@@ -80,7 +79,7 @@ namespace ttc_wtc
             }
             if (Player.Alive)
             {
-                Program.CurrentGame.GameStatus = Game.Status.InGame;
+                Game.GameStatus = Game.Status.InGame;
                 foreach(Enemy enemy in Enemies)
                 {
                     CollectedMaps.DelEntity(enemy.MapId, enemy.X, enemy.Y);
@@ -88,7 +87,7 @@ namespace ttc_wtc
             }
             else
             {
-                Game.StartANewGame();
+                Game.StartNewGame();
             }
         }
 

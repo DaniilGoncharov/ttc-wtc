@@ -13,6 +13,7 @@ namespace ttc_wtc
         public List<Item> Items;
         public PutOnItem[] EquippedItems { get; set; }
         public int TarotNumber { get; set; }
+        public int EndlessLevel { get; set; }
 
         public Player(string name, int hp, int damage, int defense, int mapId, int x, int y) :
                  base(name, hp, damage, defense, mapId, x, y, '@')
@@ -21,6 +22,7 @@ namespace ttc_wtc
             EquippedItems = new PutOnItem[5];
             Draw.CurrentMapId = MapId;
             TarotNumber = -1;
+            EndlessLevel = 0;
         }
 
         public Player() : base("Player", 0, 0, 0, 0, 6, 6, '@') { }
@@ -102,7 +104,7 @@ namespace ttc_wtc
                     }
                 }
             }
-            if (slot < 3)
+            if (slot < 2)
             {
                 EquippedItems[slot] = (Weapon)slotItems[choice - 1];
             }
@@ -155,7 +157,7 @@ namespace ttc_wtc
         public int CountDefense()
         {
             int defense = 0;
-            for (int i = 2; i < 4; i++)
+            for (int i = 2; i < 5; i++)
             {
                 if (EquippedItems[i] != null)
                 {

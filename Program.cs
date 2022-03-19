@@ -14,12 +14,13 @@ namespace ttc_wtc
             Console.SetWindowSize(90, 34);
             Console.SetBufferSize(90, 34);
             //CollectedMaps.Initialise();
-            Game.StartANewGame();
+            //Game.StartANewGame();
+            Game.GetStartMenuChoice();
         }
 
         public static Player GenerateStartPlayer()
         {
-            Player player = new Player("Player", 0, 0, 0, 0, 5, 5);
+            Player player = new Player("Player", 0, 0, 0, 0, 2, 2);
             return player;
         }
 

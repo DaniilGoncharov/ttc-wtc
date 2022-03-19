@@ -33,21 +33,21 @@ namespace ttc_wtc
             Defense = (defense, defense);
         }
 
-        public bool Move(int dirX, int dirY)
+        public bool Move(int dirX, int dirY, bool endless = false)
         {
             int startingMapId = MapId;
-            if (!MovementManager.TryMove(this, dirX, dirY))
+            if (!MovementManager.TryMove(this, dirX, dirY, endless))
             {
                 int gameStatus = MovementManager.CantMoveDecider(MapId, X + dirX, Y + dirY);
                 if (this is Player)
                 {
-                    Program.CurrentGame.GameStatus = (Game.Status)gameStatus;
+                    Game.GameStatus = (Game.Status)gameStatus;
                 }
                 else if (this is Enemy)
                 {
                     if (gameStatus == (int)Game.Status.InBattleForEntity)
                     {
-                        Program.CurrentGame.GameStatus = Game.Status.InBattle;
+                        Game.GameStatus = Game.Status.InBattle;
                     }
                 }
                 return false;

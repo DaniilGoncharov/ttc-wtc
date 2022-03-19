@@ -25,14 +25,25 @@ namespace ttc_wtc
             AllMaps[0].transitionCoords[2] = new Point(1, 1);
             AllMaps[0].transitionTo[1, 1] = 2;
             AllMaps[0].drawnMap[1, 1] = 'E';
-            Map Dungeon = Generation.GenerateMap();
+            Map Dungeon = Generation.GenerateMap(false);
             AllMaps.Add(Dungeon);
             Point corner = GetCornerCoords(AllMaps.Count - 1);
             AllMaps[AllMaps.Count - 1].transitionCoords[3] = corner;
             AllMaps[AllMaps.Count - 1].transitionTo[corner.x, corner.y] = 3;
             AllMaps[AllMaps.Count - 1].drawnMap[corner.x, corner.y] = 'E';
-            Map Dungeon2 = Generation.GenerateMap();
+            Map Dungeon2 = Generation.GenerateMap(false);
             AllMaps.Add(Dungeon2);
+        }
+
+        static public void EndlessInitialise()
+        {
+            AllMaps = new List<Map>();
+            Map Dungeon = Generation.GenerateMap(true);
+            AllMaps.Add(Dungeon);
+            Point corner = GetCornerCoords(0);
+            AllMaps[0].transitionCoords[0] = corner;
+            AllMaps[0].transitionTo[corner.x, corner.y] = 3;
+            AllMaps[0].drawnMap[corner.x, corner.y] = 'E';
         }
 
         static public Point GetCornerCoords(int mapId)
@@ -165,6 +176,13 @@ namespace ttc_wtc
         {
             AllMaps[mapId].Entities[x, y] = null;
             AllMaps[mapId].passable[x, y] = true;
+        }
+
+        public static void DelChest(int mapId, int x, int y)
+        {
+            AllMaps[mapId].Chests[x, y] = null;
+            AllMaps[mapId].passable[x, y] = true;
+            AllMaps[mapId].drawnMap[x, y] = '.';
         }
 
         public static Item GetItemFromNPC(int mapId, int x, int y, int index)

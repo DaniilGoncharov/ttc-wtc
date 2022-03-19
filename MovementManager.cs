@@ -8,9 +8,19 @@ namespace ttc_wtc
 {
     static class MovementManager
     {
-        static private bool Transition(Entity entity)
+        static private bool Transition(Entity entity, bool endless = false)
         {
             int[,] transitionTo = CollectedMaps.GetTransitionsTo(entity.MapId);
+            if (endless && transitionTo[entity.X, entity.Y] != -1)
+            {
+                CollectedMaps.DelEntity(entity.MapId, entity.X, entity.Y);
+                entity.X = 1;
+                entity.Y = 1;
+                entity.MapId = 0;
+                CollectedMaps.EndlessInitialise();
+                CollectedMaps.SetEntity(entity.MapId, entity.X, entity.Y, entity);
+                return true;
+            }
             if (transitionTo[entity.X, entity.Y] != -1)
             {
                 CollectedMaps.DelEntity(entity.MapId, entity.X, entity.Y);
@@ -26,7 +36,7 @@ namespace ttc_wtc
             return false;
         }
 
-        public static bool TryMove(Entity entity, int x, int y)
+        public static bool TryMove(Entity entity, int x, int y, bool endless = false)
         {
             bool canMove = CollectedMaps.CanMoveTo(entity.MapId, entity.X + x, entity.Y + y);
             if (canMove)
@@ -37,7 +47,7 @@ namespace ttc_wtc
                 entity.Y += y;
                 Draw.DrawAtPos(entity.X, entity.Y, entity.Symbol);
             }
-            if (canMove && MovementManager.Transition(entity))
+            if (canMove && Transition(entity, endless))
             {
                 if (entity.MapId == Draw.CurrentMapId && entity is Player)
                 {
