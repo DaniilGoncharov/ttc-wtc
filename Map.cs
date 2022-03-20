@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ttc_wtc
 {
+    [Serializable]
     public struct Point
     {
         public int x;
@@ -17,6 +18,7 @@ namespace ttc_wtc
         }
     }
 
+    [Serializable]
     class Map
     {
         public string name;
@@ -87,20 +89,26 @@ namespace ttc_wtc
                     }
                     else if (tiles[i, j] == 'C')
                     {
-                        Chest chest = new Chest(3, i, j);
+                        Chest chest = new Chest(CollectedMaps.AllMaps.Count(), i, j);
+                        //Program.CurrentGame.Chests.Add(chest);
                         if (!endless)
                         {
                             if (CollectedMaps.AllMaps.Count() == 2)
                             {
-                                chest.AddItem(Item.HeroesSword);
-                                chest.AddItem(Item.HealPotion);
+                                chest.AddItem(Item.Items[(int)Item.ItemId.HeroesSword]);
+                                chest.AddItem(Item.Items[(int)Item.ItemId.HealPotion]);
                             }
                             else
                             {
-                                chest.AddItem(Item.OldHelmet);
-                                chest.AddItem(Item.OldBreastPlate);
-                                chest.AddItem(Item.OldGreave);
+                                chest.AddItem(Item.Items[(int)Item.ItemId.OldHelmet]);
+                                chest.AddItem(Item.Items[(int)Item.ItemId.OldBreastPlate]);
+                                chest.AddItem(Item.Items[(int)Item.ItemId.OldGreave]);
                             }
+                        }
+                        else
+                        {
+                            chest.AddItem(Item.GenerateItem(Program.CurrentGame.Player.EndlessLevel));
+                            chest.AddItem(Item.Items[(int)Item.ItemId.HealPotion]);
                         }
                         Chests[i, j] = chest;
                         passable[i, j] = false;
@@ -120,27 +128,40 @@ namespace ttc_wtc
             if (!endless)
             {
                 drawnMap[1, 1] = 'E';
-                if (CollectedMaps.AllMaps.Count == 2)
+                if (CollectedMaps.AllMaps.Count == 3)
                 {
                     transitionTo[1, 1] = 0;
                     transitionCoords[0] = new Point(1, 1);
                 }
                 else
                 {
-                    transitionTo[1, 1] = 2;
-                    transitionCoords[2] = new Point(1, 1);
+                    transitionTo[1, 1] = 3;
+                    transitionCoords[3] = new Point(1, 1);
                 }
             }
+
             name = "Данж";
             foreach (var chest in Chests)
             {
-                if (chest!=null)
+                if (chest != null)
                 {
                     NotEmptyChests.Add(chest);
                 }
+
+                if (!endless)
+                {
+                    name = "Данж";
+                }
+                else if (Program.CurrentGame.Player.EndlessLevel == 0)
+                {
+                    name = "Данж 0";
+                }
+                else
+                {
+                    name = "Данж " + Program.CurrentGame.Player.EndlessLevel;
+
+                }
             }
         }
-
-
     }
 }

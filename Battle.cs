@@ -43,10 +43,20 @@ namespace ttc_wtc
                             end = true;
                             break;
                         case 1:
-                            Draw.DrawBattleInterface(AliveEnemies, Player);
-                            target = enemiesMenu.GetChoice(false, false);
-                            Tarot.Tarots[Player.TarotNumber].Ability(Player, AliveEnemies, target);
-                            end = true;
+                            if (Player.AbilityCD == 0)
+                            {
+                                Draw.DrawBattleInterface(AliveEnemies, Player);
+                                if (Tarot.Tarots[Player.TarotNumber].Target)
+                                {
+                                    target = enemiesMenu.GetChoice(false, false);
+                                    Tarot.Tarots[Player.TarotNumber].Ability(Player, AliveEnemies, target);
+                                }
+                                else
+                                {
+                                    Tarot.Tarots[Player.TarotNumber].Ability(Player, AliveEnemies, 0);
+                                }
+                                end = true;
+                            }
                             break;
                         case 2:
                             List<string> items = Player.GetNamesBySlot(Consumable.ConsumableSlot);
@@ -55,15 +65,12 @@ namespace ttc_wtc
                             if (consumableChoice > 0)
                             {
                                 Player.ChangeItemByChoice(consumableChoice, Consumable.ConsumableSlot);
-                                end = true;
                             }
-                            else
-                            {
-                                end = false;
-                            }
+                            end = false;
                             break;
                     }
                 }
+                Player.AbilityCD -= Player.AbilityCD == 0 ? 0 : 1;
                 UpdateAliveEnemies();
                 foreach(Enemy enemy in AliveEnemies)
                 {
@@ -79,6 +86,7 @@ namespace ttc_wtc
             }
             if (Player.Alive)
             {
+                Player.AbilityCD = 0;
                 Game.GameStatus = Game.Status.InGame;
                 foreach(Enemy enemy in Enemies)
                 {
@@ -87,7 +95,7 @@ namespace ttc_wtc
             }
             else
             {
-                Game.StartNewGame();
+                Game.GetStartMenuChoice();
             }
         }
 

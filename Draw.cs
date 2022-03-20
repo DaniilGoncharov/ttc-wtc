@@ -95,7 +95,7 @@ namespace ttc_wtc
 
         }
 
-        public static void DrawBattleInterface(Entity[] enemy, Entity player)
+        public static void DrawBattleInterface(Entity[] enemy, Player player)
         {
             Console.Clear();
             for (int i = enemy.Length - 1; i > -1; i--)
@@ -109,6 +109,8 @@ namespace ttc_wtc
                 Console.SetCursorPosition(53, 33 - i * 5);
                 Console.WriteLine("ЗАЩИТА:{0}", enemy[i].Defense.CurrentDefense);
             }
+            Console.SetCursorPosition(1, 29);
+            Console.WriteLine(player.AbilityCD == 0 ? "СПОСОБНОСТЬ ГОТОВА" : "СПОСОБНОСТЬ БУДЕТ ГОТОВА ЧЕРЕЗ {0}", player.AbilityCD);
             Console.SetCursorPosition(1, 30);
             Console.WriteLine("УРОН:{0}", player.Damage.CurrentDamage);
             Console.SetCursorPosition(1, 31);

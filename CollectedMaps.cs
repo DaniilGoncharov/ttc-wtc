@@ -22,8 +22,8 @@ namespace ttc_wtc
         static public void Initialise()
         {
             AllMaps = MapSolver.MapCollector();
-            AllMaps[0].transitionCoords[2] = new Point(1, 1);
-            AllMaps[0].transitionTo[1, 1] = 2;
+            AllMaps[0].transitionCoords[3] = new Point(1, 1);
+            AllMaps[0].transitionTo[1, 1] = 3;
             AllMaps[0].drawnMap[1, 1] = 'E';
             Map Dungeon = Generation.GenerateMap(false);
             AllMaps.Add(Dungeon);

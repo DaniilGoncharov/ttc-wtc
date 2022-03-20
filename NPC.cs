@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ttc_wtc
 {
+    [Serializable]
     class NPC : Entity
     {
         public List<Item> NPCInventory;

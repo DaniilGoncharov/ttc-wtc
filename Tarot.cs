@@ -14,14 +14,17 @@ namespace ttc_wtc
         public int Defense { get; set; }
         public int Damage { get; set; }
         public _Ability Ability { get; set; }
+        public bool Target { get; set; }
+
         public static List<Tarot> Tarots;
 
-        public Tarot(int hP, int defense, int damage, _Ability ability)
+        public Tarot(int hp, int defense, int damage, _Ability ability, bool target)
         {
-            HP = hP;
+            HP = hp;
             Defense = defense;
             Damage = damage;
             Ability = ability;
+            Target = target;
         }
 
         public static void Initialise()
@@ -32,12 +35,14 @@ namespace ttc_wtc
                 {
                     entity.GetDamaged(200);
                 }
-            });
+                player.AbilityCD = 3;
+            }, false);
 
             Tarot silverChariot = new Tarot(3000, 20, 50, (Player player, Entity[] entities, int numberOfEnemy) =>
             {
                 entities[numberOfEnemy].GetDamaged(500, true);
-            });
+                player.AbilityCD = 2;
+            }, true);
 
             Tarot ZAWARUDO = new Tarot(2000, 15, 200, (Player player, Entity[] entities, int numberOfEnemy) =>
             {
@@ -45,7 +50,8 @@ namespace ttc_wtc
                 {
                     entity.Stunned = 3;
                 }
-            });
+                player.AbilityCD = 6;
+            }, false);
 
             Tarots = new List<Tarot> { theFool, silverChariot, ZAWARUDO };
         }

@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace ttc_wtc
 {
-    public class Entity
+
+
+    [Serializable]
+    class Entity
+
     {
         public int Stunned { get; set; }
         public bool Alive { get; set; }
