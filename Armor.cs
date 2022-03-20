@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ttc_wtc
 {
+    [Serializable]
     class Armor : PutOnItem
     {
         public int Defense { get; set; }

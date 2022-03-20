@@ -13,14 +13,16 @@ namespace ttc_wtc
             Console.CursorVisible = false;
             Console.SetWindowSize(90, 34);
             Console.SetBufferSize(90, 34);
-            //CollectedMaps.Initialise();
-            //Game.StartANewGame();
+            Tarot.Initialise();
+            SaveAndLoad.Initialise();
+            Item.Initialise();
+            ConsumableEffects.Initialise();
             Game.GetStartMenuChoice();
         }
 
-        public static Player GenerateStartPlayer()
+        public static Player GenerateStartPlayer(bool endless = false)
         {
-            Player player = new Player("Player", 0, 0, 0, 0, 2, 2);
+            Player player = new Player("Player", 0, 0, 0, 0, endless ? 1 : 2, endless ? 1 : 2);
             return player;
         }
 

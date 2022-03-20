@@ -17,7 +17,7 @@ namespace ttc_wtc
 
     static class CollectedMaps
     {
-        static public List<Map> AllMaps { get; set; }
+        static public List<Map> AllMaps;
 
         static public void Initialise()
         {
@@ -162,7 +162,9 @@ namespace ttc_wtc
             Chest chest = AllMaps[mapId].Chests[x, y];
             Item[] result = new Item[chest.GetItemsAmount()];
             for (int i = 0; i < result.Length; i++)
+            {
                 result[i] = GetItemFromChest(mapId, x, y, 0);
+            }
             return result;
         }
 
@@ -228,9 +230,9 @@ namespace ttc_wtc
         public static Entity[] GetNearEntities(int mapId, int x, int y)
         {
             List<Entity> pResult = new List<Entity>();
-            for (int i = -1; i < 2; i++)
+            for (int i = -2; i < 3; i++)
             {
-                for (int j = -1; j < 2; j++)
+                for (int j = -2; j < 3; j++)
                 {
                     if (AllMaps[mapId].Entities[x + i, y + j] is Enemy)
                     {

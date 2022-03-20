@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ttc_wtc
 {
+    [Serializable]
     class Enemy : Entity
     {
         public Enemy(string name, int hp, int damage, int defense, int mapId, int x, int y) :

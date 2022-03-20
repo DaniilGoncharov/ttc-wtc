@@ -162,6 +162,10 @@ namespace ttc_wtc
                 for (int j = 0; j < map.GetLength(1); j++)
                 {
                     result[i, j] = IntToChar(map[i, j]);
+                    if(i == 1 && j == 1 && map[i, j] == 2)
+                    {
+                        return IntToCharMap(PlaceEnemies(CleanInt(Generate(20, 23)), 0));
+                    }
                 }
             }
             return result;
@@ -195,7 +199,7 @@ namespace ttc_wtc
         }
         public static Map GenerateMap(bool endless)
         {
-            return new Map(IntToCharMap(PlaceEnemies(CleanInt(Generate(20, 23)), 0)), 4, endless);
+            return new Map(IntToCharMap(PlaceEnemies(CleanInt(Generate(20, 23)), 3)), 4, endless);
         }
     }
 }

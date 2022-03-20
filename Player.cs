@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace ttc_wtc
 {
+    [Serializable]
     class Player : Entity
     {
-        public delegate void ConsEffect(Player player);
-
         public List<Item> Items;
         public PutOnItem[] EquippedItems { get; set; }
         public int TarotNumber { get; set; }
         public int EndlessLevel { get; set; }
+        public int AbilityCD { get; set; }
 
         public Player(string name, int hp, int damage, int defense, int mapId, int x, int y) :
                  base(name, hp, damage, defense, mapId, x, y, '@')
@@ -23,6 +23,7 @@ namespace ttc_wtc
             Draw.CurrentMapId = MapId;
             TarotNumber = -1;
             EndlessLevel = 0;
+            AbilityCD = 0;
         }
 
         public Player() : base("Player", 0, 0, 0, 0, 6, 6, '@') { }
@@ -32,7 +33,6 @@ namespace ttc_wtc
             if (TarotNumber == -1)
             {
                 TarotNumber = tarotNumber;
-                Tarot.Initialise();
                 HP = (Tarot.Tarots[tarotNumber].HP, Tarot.Tarots[tarotNumber].HP);
                 Damage = (Tarot.Tarots[tarotNumber].Damage, Tarot.Tarots[tarotNumber].Damage);
                 Defense = (Tarot.Tarots[tarotNumber].Defense, Tarot.Tarots[tarotNumber].Defense);
@@ -44,10 +44,10 @@ namespace ttc_wtc
             List<string> result = new List<string>();
             for (int i = 0; i < EquippedItems.Length; i++)
             {
-                result.Add((PutOnItem.Slot)i + ": " + (EquippedItems[i] != null ? EquippedItems[i].Name : "None"));
+                result.Add((PutOnItem.Slot)i + ": " + (EquippedItems[i] != null ? EquippedItems[i].Name : "Ничего"));
             }
-            result.Add("Consumables");
-            result.Add("Other");
+            result.Add("Расходники");
+            result.Add("Прочее");
             result.Add("Вернуться к игре");
             return result;
         }
@@ -55,7 +55,7 @@ namespace ttc_wtc
         public List<string> GetNamesBySlot(int slot)
         {
             List<string> result = new List<string>();
-            result.Add("None");
+            result.Add("Ничего");
             if (Items != null)
             {
                 foreach (Item item in Items)
@@ -110,7 +110,7 @@ namespace ttc_wtc
             }
             else if (slot == Consumable.ConsumableSlot)
             {
-                ((Consumable)slotItems[choice - 1]).Effect(this);
+                ConsumableEffects.Effects[((Consumable)slotItems[choice - 1]).EffectNumber].Invoke(this);
                 DeleteItem(slotItems[choice - 1]);
             }
             else EquippedItems[slot] = (Armor)slotItems[choice - 1];

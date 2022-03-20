@@ -17,6 +17,7 @@ namespace ttc_wtc
                 entity.X = 1;
                 entity.Y = 1;
                 entity.MapId = 0;
+                Program.CurrentGame.Player.EndlessLevel++;
                 CollectedMaps.EndlessInitialise();
                 CollectedMaps.SetEntity(entity.MapId, entity.X, entity.Y, entity);
                 return true;

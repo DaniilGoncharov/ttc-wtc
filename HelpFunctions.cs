@@ -47,5 +47,7 @@ namespace ttc_wtc
             outputArray[^1] = inputArray[^1];
             return outputArray;
         }
+
+
     }
 }

@@ -9,8 +9,8 @@ namespace ttc_wtc
 
     class Menu
     {
-        public static Menu StartMenu = new Menu(new string[] { "Сюжетная игра", "Бесконечный режим", "Выход" });
-        public static Menu PauseMenu = new Menu(new string[] { "Продолжить", "Выход в главное меню" });
+        public static Menu StartMenu = new Menu(new string[] { "Сюжетная игра", "Бесконечный режим", "Загрузить", "Выйти" });
+        public static Menu PauseMenu = new Menu(new string[] { "Продолжить игру", "Сохранить", "Загрузить", "Выйти в главное меню" });
         public static Menu TarotMenu = new Menu(new string[] { "The Fool", "Silver Chariot", "The World" });
         public static Menu NPCMenu = new Menu(new string[] { "Выйти" });
         public static Menu BattleMenu = new Menu(new string[] { "АТАКОВАТЬ", "ИСПОЛЬЗОВАТЬ СПОСОБНОСТЬ", "ОТКРЫТЬ ИНВЕНТАРЬ" });
