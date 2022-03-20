@@ -56,6 +56,9 @@ namespace ttc_wtc
                 case 'N':
                     Console.ForegroundColor = ConsoleColor.Green;
                     break;
+                case 'U':
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    break;
                 case '$':
                     Console.ForegroundColor = ConsoleColor.Red;
                     break;
@@ -87,6 +90,9 @@ namespace ttc_wtc
             Console.WriteLine("УРОН:{0}", player.Damage.CurrentDamage);
             Console.SetCursorPosition(x, y + 3);
             Console.WriteLine("ЗАЩИТА:{0}", player.Defense.CurrentDefense);
+            Console.SetCursorPosition(x, y + 4);
+            Console.WriteLine("{0}", player.Quests[player.QuestNumber].questValue);
+
         }
 
         public static void DrawBattleInterface(Entity[] enemy, Entity player)

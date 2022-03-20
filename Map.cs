@@ -26,7 +26,7 @@ namespace ttc_wtc
         public Point[] transitionCoords;
         public Entity[,] Entities;
         public Chest[,] Chests;
-
+        public List<Chest> NotEmptyChests = new List<Chest>();
         public Map(string[] map, int numberOfMaps)
         {
             map = HelpFunctions.MST(map);
@@ -52,6 +52,13 @@ namespace ttc_wtc
             passable = new bool[sizex, sizey];
             name = map[^1];
             drawnMap = MapSolver.MapSplitter(map, sizey, transitionTo, connections, passable);
+            foreach (var chest in Chests)
+            {
+                if (chest != null)
+                {
+                    NotEmptyChests.Add(chest);
+                }
+            }
         }
 
         public Map(char[,] tiles, int numberOfMaps, bool endless)
@@ -125,6 +132,13 @@ namespace ttc_wtc
                 }
             }
             name = "Данж";
+            foreach (var chest in Chests)
+            {
+                if (chest!=null)
+                {
+                    NotEmptyChests.Add(chest);
+                }
+            }
         }
 
 

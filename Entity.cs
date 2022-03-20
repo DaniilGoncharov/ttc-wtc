@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ttc_wtc
 {
-    class Entity
+    public class Entity
     {
         public int Stunned { get; set; }
         public bool Alive { get; set; }

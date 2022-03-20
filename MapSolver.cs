@@ -66,7 +66,7 @@ namespace ttc_wtc
         static public List<Map> MapCollector()
         {
             List<Map> allMaps = new List<Map>();
-            string[] paths = { "../../../testMap0.map", "../../../testMap1.map" }; //list of all maps
+            string[] paths = { "../../../testMap0.map", "../../../testMap1.map", "../../../testMap2.map" }; //list of all maps
             for (int i = 0; i < paths.Length; i++)
             {
                 string[] collectedMap = File.ReadAllLines(paths[i]);

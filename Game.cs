@@ -28,11 +28,14 @@ namespace ttc_wtc
             InBattle = 10,
             InBattleForEntity = 11,
             InNPC = 12,
+            InDialog=13
         }
 
         private Player player;
         private List<Entity> entities;
         private List<Chest> chests;
+        private NPC currentNPC;
+        private bool mainQestisActive = true;
         public static Status GameStatus { get; set; }
 
         public Game(Player Player, List<Entity> Entities = null, List<Chest> Chests = null)
@@ -310,10 +313,16 @@ namespace ttc_wtc
             }
             CollectedMaps.SetEntity(player.MapId, player.X, player.Y, player);
             Draw.CurrentMapId = player.MapId;
+            player.AddItem(Item.HealPotion);
             int moveX = 0;
             int moveY = 0;
             do
             {
+                if (player.Have("Ключ от старых ворот"))
+                {
+                    player.QuestNumber = 2;
+                    CollectedMaps.InitialiseClosedDour(0);
+                }
                 switch (GameStatus)
                 {
                     case Status.InGame:
@@ -340,9 +349,14 @@ namespace ttc_wtc
                     case Status.CheatConsole:
                         ConsoleStatus(endless);
                         break;
+                    case Status.InDialog:
+                        InDialog(moveX, moveY, endless);
+                        break;
                     case Status.Closed:
                         Environment.Exit(0);
                         break;
+                       
+
                 }
             } while (true);
         }
@@ -353,11 +367,34 @@ namespace ttc_wtc
             switch (choice)
             {
                 case 0:
-                    GameStatus = Status.InGame;
+                    GameStatus = Status.InDialog;
                     break;
             }
         }
+        public void InDialog(int moveX, int moveY, bool endlessGame = false) 
+        {
+           
+            Console.Clear();
+            currentNPC = (NPC)CollectedMaps.GetEntity(player.MapId, player.X + moveX, player.Y + moveY);
+            Quest.QestChecking(player, currentNPC);
+            if (currentNPC.Dialog.GetDialog(currentNPC) == 0)
+            {
+                if (currentNPC.Dialog.Completeness)
+                {
+                    player.QuestNumber = 1;
+                }
+                GameStatus = Status.InGame;
+            }
+            else
+            {
+                player.AddItems(CollectedMaps.GetAllItemsFromNPC(player.MapId, player.X + moveX, player.Y + moveY));
+                currentNPC = new Enemy(currentNPC.Name, currentNPC.HP.MaximumHP, currentNPC.Damage.CurrentDamage,
+                       currentNPC.Defense.CurrentDefense, currentNPC.MapId, currentNPC.X, y: currentNPC.Y);
+                CollectedMaps.SetEntity(currentNPC.MapId, currentNPC.X, currentNPC.Y, currentNPC);
+                GameStatus = Status.InBattle;
 
+            }
+        }
         public void TarotMenuStatus(bool endlessGame = false)
         {
             int choice = Menu.TarotMenu.GetChoice();
@@ -400,6 +437,33 @@ namespace ttc_wtc
                 if (((moveX != 0) || (moveY != 0)) && (player.Move(moveX, moveY, endlessGame)))
                 {
                     CollectedMaps.EnemyMovement(player.MapId, player.X, player.Y);
+                }             
+                if (entities!=null&&!entities[0].Alive&&mainQestisActive&&entities[1].Alive)
+                {
+                    player.QuestNumber = 3;
+                    Draw.ReDrawMap(CollectedMaps.GetDrawnMap(player.MapId), player.MapId);
+                    NPC vilianNPC = (NPC)CollectedMaps.GetEntity(entities[1].MapId,entities[1].X,entities[1].Y);
+                    if (vilianNPC.Have("Статуэтка чайки"))
+                    {
+                        vilianNPC.HP=(2000,2000);
+                        mainQestisActive = false;                       
+                        entities.RemoveAt(1);
+                        CollectedMaps.DelEntity(vilianNPC.MapId, vilianNPC.X, vilianNPC.Y);
+                       vilianNPC= new Enemy(vilianNPC.Name, vilianNPC.HP.MaximumHP, vilianNPC.Damage.CurrentDamage,
+                       vilianNPC.Defense.CurrentDefense, vilianNPC.MapId, vilianNPC.X, y: vilianNPC.Y);
+                        entities.Add(vilianNPC);
+                        CollectedMaps.SetEntity(vilianNPC.MapId, vilianNPC.X, vilianNPC.Y, vilianNPC);
+                    }
+                    else
+                    {
+                        mainQestisActive = false;                       
+                        entities.RemoveAt(1);
+                        CollectedMaps.DelEntity(vilianNPC.MapId, vilianNPC.X, vilianNPC.Y);
+                        vilianNPC = new Enemy(vilianNPC.Name, vilianNPC.HP.MaximumHP, vilianNPC.Damage.CurrentDamage,
+                        vilianNPC.Defense.CurrentDefense, vilianNPC.MapId, vilianNPC.X, y: vilianNPC.Y);
+                        entities.Add(vilianNPC);
+                        CollectedMaps.SetEntity(vilianNPC.MapId, vilianNPC.X, vilianNPC.Y, vilianNPC);
+                    }
                 }
             } while (GameStatus == Status.InGame);
         }

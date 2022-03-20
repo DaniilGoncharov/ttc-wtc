@@ -40,5 +40,9 @@ namespace ttc_wtc
                 player.HP = (player.HP.CurrentHP + 500, player.HP.MaximumHP);
             }
         });
+
+        public static Keys UminekoStone = new Keys("Статуэтка чайки");
+
+        public static Keys OldKey = new Keys("Ключ от старых ворот");
     }
 }

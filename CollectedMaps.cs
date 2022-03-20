@@ -28,11 +28,18 @@ namespace ttc_wtc
             Map Dungeon = Generation.GenerateMap(false);
             AllMaps.Add(Dungeon);
             Point corner = GetCornerCoords(AllMaps.Count - 1);
-            AllMaps[AllMaps.Count - 1].transitionCoords[3] = corner;
-            AllMaps[AllMaps.Count - 1].transitionTo[corner.x, corner.y] = 3;
+            AllMaps[AllMaps.Count - 1].transitionCoords[4] = corner;
+            AllMaps[AllMaps.Count - 1].transitionTo[corner.x, corner.y] = 4;
             AllMaps[AllMaps.Count - 1].drawnMap[corner.x, corner.y] = 'E';
             Map Dungeon2 = Generation.GenerateMap(false);
             AllMaps.Add(Dungeon2);
+            Dungeon2.NotEmptyChests[0].AddItem(Item.UminekoStone);
+        }
+        static public void InitialiseClosedDour(int i) //Запись всех карт в allMaps (!!! стирает всю информацию с них, которая была записана во время выполнения)
+        {
+            CollectedMaps.AllMaps[i].transitionCoords[2] = new Point(1, 1);
+            CollectedMaps.AllMaps[i].transitionTo[7, 7] = 2;
+            CollectedMaps.AllMaps[i].drawnMap[7, 7] = 'E';
         }
 
         static public void EndlessInitialise()
@@ -204,7 +211,21 @@ namespace ttc_wtc
             Npc.GetTiefsItemNames().RemoveAt(0);
             return result;
         }
-
+        public static Item GetItemFromNPCWithId(int mapId, int x, int y, string name) //Получить предмет NPC по индексу, желательно совместить с GetItemFromChest(GetItemFromInventory?)
+        {
+            Item result;
+            NPC Npc = (NPC)CollectedMaps.AllMaps[mapId].Entities[y, x];
+            foreach (var item in Npc.NPCInventory)
+            {
+                if (item.Name == name)
+                {
+                    result = item;
+                    Npc.NPCInventory.Remove(item);
+                    return result;
+                }
+            }
+            return null;
+        }
         public static void MoveEntity(int mapId, int x, int y, int moveX, int moveY, Entity entity)
         {
             DelEntity(mapId, x, y);
