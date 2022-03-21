@@ -15,6 +15,8 @@ namespace ttc_wtc
             OldGreave = 4,
             HeroesSword = 5,
             HealPotion = 6,
+            UminekoStone = 7,
+            OldKey = 8,
         }
 
         public string Name { get; set; }
@@ -41,7 +43,11 @@ namespace ttc_wtc
 
             Consumable HealPotion = new Consumable("Зелье лечения", 0);
 
-            Items = new List<Item> { TrainingShield, TrainingSword, OldHelmet, OldBreastPlate, OldGreave, HeroesSword, HealPotion };
+            Key UminekoStone = new Key("Статуэтка чайки");
+
+            Key OldKey = new Key("Ключ от старых ворот");
+
+            Items = new List<Item> { TrainingShield, TrainingSword, OldHelmet, OldBreastPlate, OldGreave, HeroesSword, HealPotion, UminekoStone, OldKey };
         }
 
         public static PutOnItem GenerateItem(int level)
@@ -62,12 +68,6 @@ namespace ttc_wtc
                 default:
                     return null;
             }
-
         }
-
-        public static Key UminekoStone = new Key("Статуэтка чайки");
-
-        public static Key OldKey = new Key("Ключ от старых ворот");
-
     }
 }

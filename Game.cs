@@ -24,13 +24,12 @@ namespace ttc_wtc
             Theft = 14
         }
 
-
         public Player player;
         public List<Entity> entities;
         public List<Chest> chests;
         public NPC CurrentNPC { get; set; }
         public bool mainQuestIsActive = true;
-
+        public bool supQestisActive = true;
         public static Status GameStatus { get; set; }
 
         public Game(Player player, List<Entity> entities = null, List<Chest> chests = null)
@@ -119,10 +118,11 @@ namespace ttc_wtc
             int moveY = 0;
             do
             {
-                if (player.Have("Ключ от старых ворот"))
+                if (player.Have("Ключ от старых ворот") && supQestisActive)
                 {
                     player.QuestNumber = 2;
                     CollectedMaps.InitialiseClosedDour(0);
+                    supQestisActive = false;
                 }
                 switch (GameStatus)
                 {
@@ -195,10 +195,10 @@ namespace ttc_wtc
 
             Console.Clear();
             CurrentNPC = (NPC)CollectedMaps.GetEntity(player.MapId, player.X + moveX, player.Y + moveY);
-            Quest.QestChecking(player, CurrentNPC);
+            Quest.QestChecking(player, CurrentNPC, entities[0]);
             if (CurrentNPC.Dialog.GetDialog(CurrentNPC) == 0)
             {
-                if (CurrentNPC.Dialog.Completeness)
+                if (CurrentNPC.Dialog.Completeness && CurrentNPC.Name == "Эрика")
                 {
                     player.QuestNumber = 1;
                 }
@@ -272,7 +272,7 @@ namespace ttc_wtc
             {
                 moveX = 0;
                 moveY = 0;
-                Draw.DrawMapInterface(player, 53, 3);
+                Draw.DrawMapInterface(player, 53, 3, endlessGame);
                 switch (Console.ReadKey(true).Key)
                 {
                     case ConsoleKey.Escape:
@@ -308,7 +308,9 @@ namespace ttc_wtc
                     NPC vilianNPC = (NPC)CollectedMaps.GetEntity(entities[1].MapId, entities[1].X, entities[1].Y);
                     if (vilianNPC.Have("Статуэтка чайки"))
                     {
-                        vilianNPC.HP = (2000, 2000);
+                        vilianNPC.HP = (6000, 6000);
+                        vilianNPC.Damage = (500, 500);
+                        vilianNPC.Defense = (50, 50);
                         mainQuestIsActive = false;
                         entities.RemoveAt(1);
                         CollectedMaps.DelEntity(vilianNPC.MapId, vilianNPC.X, vilianNPC.Y);
@@ -327,9 +329,7 @@ namespace ttc_wtc
                         entities.Add(vilianNPC);
                         CollectedMaps.SetEntity(vilianNPC.MapId, vilianNPC.X, vilianNPC.Y, vilianNPC);
                     }
-
                     CollectedMaps.EnemyMovement(player.MapId, player.X, player.Y);
-
                 }
             } while (GameStatus == Status.InGame);
         }

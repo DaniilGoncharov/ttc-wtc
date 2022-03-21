@@ -1,4 +1,6 @@
-﻿namespace ttc_wtc
+﻿using System;
+
+namespace ttc_wtc
 {
     static class HelpFunctions
     {
@@ -42,6 +44,19 @@
             return outputArray;
         }
 
-
+        public static void Haise()
+        {
+            string text = System.IO.File.ReadAllText("../../../Haise.txt");
+            string[] textArray = text.Split('\n');
+            for (int j = 0; j < textArray.Length - 1; j++)
+            {
+                Console.SetCursorPosition(0, 0);
+                for (int i = 0; i < 35; i++)
+                {
+                    Console.WriteLine(textArray[j].Substring(i * 90, 90));
+                }
+                System.Threading.Thread.Sleep(100);
+            }
+        }
     }
 }

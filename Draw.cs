@@ -32,6 +32,25 @@ namespace ttc_wtc
                         case 'E':
                             Console.ForegroundColor = ConsoleColor.Yellow;
                             break;
+                        case '↑':
+                            Console.ForegroundColor = ConsoleColor.DarkGreen;
+                            break;
+                        case '●':
+                            Console.ForegroundColor = ConsoleColor.DarkGray;
+                            break;
+                        case 'A':
+                            Console.ForegroundColor = ConsoleColor.Magenta;
+                            break;
+                        case '~':
+                            Console.ForegroundColor = ConsoleColor.DarkBlue;
+                            break;
+                        case '‖':
+                            Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                            break;
+                        case 'X':
+                            Console.ForegroundColor = ConsoleColor.DarkRed;
+                            break;
+
 
                     }
                     Console.Write("{0} ", map[i, j]);
@@ -76,7 +95,7 @@ namespace ttc_wtc
             }
         }
 
-        public static void DrawMapInterface(Player player, int x, int y)
+        public static void DrawMapInterface(Player player, int x, int y,bool endlessGame)
         {
             Console.SetCursorPosition(x, y);
             Console.WriteLine("ЛОКАЦИЯ:{0}", CollectedMaps.GetMapName(player.MapId));
@@ -86,8 +105,12 @@ namespace ttc_wtc
             Console.WriteLine("УРОН:{0}", player.Damage.CurrentDamage);
             Console.SetCursorPosition(x, y + 3);
             Console.WriteLine("ЗАЩИТА:{0}", player.Defense.CurrentDefense);
-            Console.SetCursorPosition(x, y + 4);
-            Console.WriteLine("{0}", player.Quests[player.QuestNumber].questValue);
+            if (!endlessGame)
+            {
+                Console.SetCursorPosition(x, y + 4);
+                Console.WriteLine("{0}", player.Quests[player.QuestNumber].questValue);
+            }
+           
 
         }
 

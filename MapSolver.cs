@@ -23,7 +23,7 @@ namespace ttc_wtc
         {
             char[,] result = new char[baseMap.Length, sizeY];
             string numbers = "0123456789";
-            string unpassable = "#";
+            string unpassable = "#/____+\\-|=↑●━━┃~*X‖ ";
             for (int i = 0; i < baseMap.Length - 2; i++)
             {
                 for (int j = 0; j < baseMap[i].Length; j++)
@@ -63,7 +63,7 @@ namespace ttc_wtc
         static public List<Map> MapCollector()
         {
             List<Map> allMaps = new List<Map>();
-            string[] paths = { "../../../testMap0.map", "../../../testMap1.map", "../../../testMap2.map" };
+            string[] paths = { "../../../Wasteland.map", "../../../House.map", "../../../BossArena.map" };
             for (int i = 0; i < paths.Length; i++)
             {
                 string[] collectedMap = File.ReadAllLines(paths[i]);

@@ -18,6 +18,7 @@ namespace ttc_wtc
         static public void Initialise()
         {
             AllMaps = MapSolver.MapCollector();
+            AllMaps[0].passable[11, 18] = false;
             AllMaps[0].transitionCoords[3] = new Point(1, 1);
             AllMaps[0].transitionTo[1, 1] = 3;
             AllMaps[0].drawnMap[1, 1] = 'E';
@@ -29,13 +30,14 @@ namespace ttc_wtc
             AllMaps[AllMaps.Count - 1].drawnMap[corner.x, corner.y] = 'E';
             Map Dungeon2 = Generation.GenerateMap(false);
             AllMaps.Add(Dungeon2);
-            Dungeon2.NotEmptyChests[0].AddItem(Item.UminekoStone);
         }
-        static public void InitialiseClosedDour(int i) //Запись всех карт в allMaps (!!! стирает всю информацию с них, которая была записана во время выполнения)
+
+        static public void InitialiseClosedDour(int i)
         {
-            CollectedMaps.AllMaps[i].transitionCoords[2] = new Point(1, 1);
-            CollectedMaps.AllMaps[i].transitionTo[7, 7] = 2;
-            CollectedMaps.AllMaps[i].drawnMap[7, 7] = 'E';
+            AllMaps[0].passable[11, 18] = true;
+            AllMaps[i].transitionCoords[2] = new Point(11, 18);
+            AllMaps[i].transitionTo[11, 18] = 2;
+            AllMaps[i].drawnMap[11, 18] = 'E';
         }
 
         static public void EndlessInitialise()
@@ -207,7 +209,7 @@ namespace ttc_wtc
             Npc.GetTiefsItemNames().RemoveAt(0);
             return result;
         }
-        public static Item GetItemFromNPCWithId(int mapId, int x, int y, string name) //Получить предмет NPC по индексу, желательно совместить с GetItemFromChest(GetItemFromInventory?)
+        public static Item GetItemFromNPCWithId(int mapId, int x, int y, string name)
         {
             Item result;
             NPC Npc = (NPC)CollectedMaps.AllMaps[mapId].Entities[y, x];

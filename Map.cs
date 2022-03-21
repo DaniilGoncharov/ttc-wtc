@@ -97,9 +97,7 @@ namespace ttc_wtc
                             }
                             else
                             {
-                                chest.AddItem(Item.Items[(int)Item.ItemId.OldHelmet]);
-                                chest.AddItem(Item.Items[(int)Item.ItemId.OldBreastPlate]);
-                                chest.AddItem(Item.Items[(int)Item.ItemId.OldGreave]);
+                                chest.AddItem(Item.Items[(int)Item.ItemId.UminekoStone]);
                             }
                         }
                         else
