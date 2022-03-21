@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ttc_wtc
 {
@@ -44,7 +41,7 @@ namespace ttc_wtc
 
             Consumable HealPotion = new Consumable("Зелье лечения", 0);
 
-        Items = new List<Item> { TrainingShield, TrainingSword, OldHelmet, OldBreastPlate, OldGreave, HeroesSword, HealPotion };
+            Items = new List<Item> { TrainingShield, TrainingSword, OldHelmet, OldBreastPlate, OldGreave, HeroesSword, HealPotion };
         }
 
         public static PutOnItem GenerateItem(int level)
@@ -68,9 +65,9 @@ namespace ttc_wtc
 
         }
 
-        public static Keys UminekoStone = new Keys("Статуэтка чайки");
+        public static Key UminekoStone = new Key("Статуэтка чайки");
 
-        public static Keys OldKey = new Keys("Ключ от старых ворот");
+        public static Key OldKey = new Key("Ключ от старых ворот");
 
     }
 }

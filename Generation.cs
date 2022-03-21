@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ttc_wtc
 {
@@ -162,7 +159,7 @@ namespace ttc_wtc
                 for (int j = 0; j < map.GetLength(1); j++)
                 {
                     result[i, j] = IntToChar(map[i, j]);
-                    if(i == 1 && j == 1 && map[i, j] == 2)
+                    if (i == 1 && j == 1 && map[i, j] == 2)
                     {
                         return IntToCharMap(PlaceEnemies(CleanInt(Generate(20, 23)), 0));
                     }

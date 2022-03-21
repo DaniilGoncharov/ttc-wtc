@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ttc_wtc
 {
@@ -90,10 +88,9 @@ namespace ttc_wtc
                     else if (tiles[i, j] == 'C')
                     {
                         Chest chest = new Chest(CollectedMaps.AllMaps.Count(), i, j);
-                        //Program.CurrentGame.Chests.Add(chest);
                         if (!endless)
                         {
-                            if (CollectedMaps.AllMaps.Count() == 2)
+                            if (CollectedMaps.AllMaps.Count() == 3)
                             {
                                 chest.AddItem(Item.Items[(int)Item.ItemId.HeroesSword]);
                                 chest.AddItem(Item.Items[(int)Item.ItemId.HealPotion]);
@@ -107,7 +104,7 @@ namespace ttc_wtc
                         }
                         else
                         {
-                            chest.AddItem(Item.GenerateItem(Program.CurrentGame.Player.EndlessLevel));
+                            chest.AddItem(Item.GenerateItem(Program.CurrentGame.player.EndlessLevel));
                             chest.AddItem(Item.Items[(int)Item.ItemId.HealPotion]);
                         }
                         Chests[i, j] = chest;
@@ -152,14 +149,13 @@ namespace ttc_wtc
                 {
                     name = "Данж";
                 }
-                else if (Program.CurrentGame.Player.EndlessLevel == 0)
+                else if (Program.CurrentGame.player.EndlessLevel == 0)
                 {
                     name = "Данж 0";
                 }
                 else
                 {
-                    name = "Данж " + Program.CurrentGame.Player.EndlessLevel;
-
+                    name = "Данж " + Program.CurrentGame.player.EndlessLevel;
                 }
             }
         }

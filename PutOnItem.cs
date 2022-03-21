@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ttc_wtc
 {
@@ -17,6 +13,7 @@ namespace ttc_wtc
             Body = 3,
             Legs = 4,
         }
+
         public PutOnItem.Slot EquippmentSlot { get; set; }
 
         public PutOnItem(string name, PutOnItem.Slot equippmentSlot) : base(name)

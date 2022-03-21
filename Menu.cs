@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ttc_wtc
 {
@@ -12,7 +9,7 @@ namespace ttc_wtc
         public static Menu StartMenu = new Menu(new string[] { "Сюжетная игра", "Бесконечный режим", "Загрузить", "Выйти" });
         public static Menu PauseMenu = new Menu(new string[] { "Продолжить игру", "Сохранить", "Загрузить", "Выйти в главное меню" });
         public static Menu TarotMenu = new Menu(new string[] { "The Fool", "Silver Chariot", "The World" });
-        public static Menu NPCMenu = new Menu(new string[] { "Поговорить","Обокрасть","Ударить" });
+        public static Menu NPCMenu = new Menu(new string[] { "Поговорить", "Обокрасть", "Ударить", "Выйти" });
         public static Menu BattleMenu = new Menu(new string[] { "АТАКОВАТЬ", "ИСПОЛЬЗОВАТЬ СПОСОБНОСТЬ", "ОТКРЫТЬ ИНВЕНТАРЬ" });
 
         public string[] MenuItems { get; set; }

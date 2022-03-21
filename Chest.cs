@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ttc_wtc
 {
     [Serializable]
     class Chest
     {
-        public List<Item> Items { get; set; }
-        public int MapId { get; set; }
-        public int X { get; set; }
-        public int Y { get; set; }
+        public List<Item> Items { get; }
+        public int MapId { get; }
+        public int X { get; }
+        public int Y { get; }
 
         public Chest(int mapId, int x, int y, List<Item> items = null)
         {
@@ -61,7 +58,7 @@ namespace ttc_wtc
 
         public void AddItems(Item[] items)
         {
-            foreach(Item item in items)
+            foreach (Item item in items)
             {
                 AddItem(item);
             }

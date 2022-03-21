@@ -1,107 +1,106 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+
 namespace ttc_wtc
-{   
-    public class Wopros
+{
+    [Serializable]
+    public class Question
     {
-        public Wopros(string wopros,List<Reaction> reactions)
+        public Question(string question, List<Reaction> reactions)
         {
-            Wpr = wopros;
-            reactions1 = reactions;
+            Qstn = question;
+            Reactions1 = reactions;
         }
-        public string Wpr { get; set; }
-        public List<Reaction> reactions1 { get; set; }               
+
+        public string Qstn { get; set; }
+        public List<Reaction> Reactions1 { get; set; }
     }
+
+    [Serializable]
     public class Reaction
     {
-        public Reaction(string answer,Wopros wopros) 
-        {           
-           antwort = answer;
-           Woprosik = wopros;
-        }
-        public string antwort;
-        public Wopros Woprosik;      
-    }
-     class Dialog
-    {
-        public Dialog(Wopros StartWopros,int dialogLength)
+        public Reaction(string answer, Question question)
         {
-            LiveWopros = StartWopros;
+            Answer = answer;
+            Question = question;
+        }
+        public string Answer { get; set; }
+        public Question Question { get; set; }
+    }
+
+    [Serializable]
+    class Dialog
+    {
+        public Dialog(Question startQuestion, int dialogLength)
+        {
+            LiveQuestion = startQuestion;
             DialogLength = dialogLength;
         }
-        public Wopros LiveWopros;
+
+        public Question LiveQuestion;
         public int DialogLength;
-        public bool Completeness=false;
+        public bool Completeness = false;
         public static string[] ToStrings(List<Reaction> reactions)
         {
             string[] ToString = new string[reactions.Count];
             for (int i = 0; i < reactions.Count; i++)
             {
-                ToString[i] = reactions[i].antwort;
+                ToString[i] = reactions[i].Answer;
             }
             return ToString;
         }
-        public static void Saying (string Speach,int line)
+
+        public static void Say(string Speach, int line)
         {
             int n = 0;
-
             for (int i = 0; i < Speach.Length; i++)
             {
-               
-
-                if (i+17>=81)
+                if (i + 17 >= 81)
                 {
-                    Console.SetCursorPosition(17+n,line+1 );
+                    Console.SetCursorPosition(17 + n, line + 1);
                     n++;
                 }
                 Console.Write(Speach[i]);
                 System.Threading.Thread.Sleep(25);
             }
         }
+
         public int GetDialog(NPC currentnpc)
         {
             int x = 0;
-            for (int i = 0; i < DialogLength+1; i++)
-            {             
+            for (int i = 0; i < DialogLength + 1; i++)
+            {
                 Reaction N;
-                
-                if (LiveWopros.reactions1!=null)
+                if (LiveQuestion.Reactions1 != null)
                 {
-                    Console.SetCursorPosition(17, i+10 + x);
-                    Console.Write(currentnpc.Name + ":" );
-                    Saying(LiveWopros.Wpr,i+10);
+                    Console.SetCursorPosition(17, i + 10 + x);
+                    Console.Write(currentnpc.Name + ":");
+                    Say(LiveQuestion.Qstn, i + 10);
                     Console.WriteLine();
-                    //Console.WriteLine(currentnpc.Name+":"+LiveWopros.Wpr);
-                    Menu DialogMenu = new Menu(ToStrings(LiveWopros.reactions1));
-
-                    N = LiveWopros.reactions1[DialogMenu.GetChoice(true, false, 28, 24)];
-                    Console.SetCursorPosition(17, i+11+x);
+                    Menu DialogMenu = new Menu(ToStrings(LiveQuestion.Reactions1));
+                    N = LiveQuestion.Reactions1[DialogMenu.GetChoice(true, false, 28, 24)];
+                    Console.SetCursorPosition(17, i + 11 + x);
                     x += 1;
-                   
-                    Console.Write("Канеки :"+N.antwort);
-                    LiveWopros = N.Woprosik;
+                    Console.Write("Канеки :" + N.Answer);
+                    LiveQuestion = N.Question;
                     DialogMenu.ClearMenu(28, 24, 1);
-                   
                 }
                 else
                 {
-                    Console.SetCursorPosition(17, i+10 + x);
+                    Console.SetCursorPosition(17, i + 10 + x);
                     Console.Write(currentnpc.Name + ":");
-                    Saying(LiveWopros.Wpr,i+12);
+                    Say(LiveQuestion.Qstn, i + 12);
                     Completeness = true;
-                    // Console.WriteLine(currentnpc.Name + ":" + LiveWopros.Wpr);
                     break;
-                }               
+                }
             }
             string Bye = "Пока";
             string Fight = "Драться";
             List<string> vs = new List<string>();
             vs.Add(Bye);
             vs.Add(Fight);
-            Menu resultMenu = new Menu(vs);           
+            Menu resultMenu = new Menu(vs);
             return resultMenu.GetChoice(true, false, 31, 24);
         }
     }
-   
 }

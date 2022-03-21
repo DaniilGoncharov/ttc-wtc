@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ttc_wtc
 {
     static class MapSolver
     {
-        const int char0int0diff = 48; 
+        const int char0int0diff = 48;
 
         static public int[] ConnectionSolver(string path)
         {
@@ -66,7 +63,7 @@ namespace ttc_wtc
         static public List<Map> MapCollector()
         {
             List<Map> allMaps = new List<Map>();
-            string[] paths = { "../../../testMap0.map", "../../../testMap1.map", "../../../testMap2.map" }; //list of all maps
+            string[] paths = { "../../../testMap0.map", "../../../testMap1.map", "../../../testMap2.map" };
             for (int i = 0; i < paths.Length; i++)
             {
                 string[] collectedMap = File.ReadAllLines(paths[i]);

@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ttc_wtc
 {
@@ -16,7 +13,7 @@ namespace ttc_wtc
         public int QuestNumber { get; set; }
         public int AbilityCD { get; set; }
 
-        public List<Quest> Quests { get; set; }= new List<Quest>(); 
+        public List<Quest> Quests { get; set; } = new List<Quest>();
         public Player(string name, int hp, int damage, int defense, int mapId, int x, int y) :
                  base(name, hp, damage, defense, mapId, x, y, '@')
         {
@@ -26,16 +23,15 @@ namespace ttc_wtc
             TarotNumber = -1;
             QuestNumber = 0;
             EndlessLevel = 0;
-
             Quests.Add(Quest.firstQest);
             Quests.Add(Quest.secondQest);
             Quests.Add(Quest.thirdQest);
             Quests.Add(Quest.fourthQest);
             AbilityCD = 0;
-
         }
 
         public Player() : base("Player", 0, 0, 0, 0, 6, 6, '@') { }
+
         public bool Have(string name)
         {
             foreach (Item item in Items)
@@ -47,17 +43,17 @@ namespace ttc_wtc
                         return true;
                     }
                 }
-
             }
             return false;
         }
+
         public Item DeleteFromInventory(string name)
         {
-            if (Items.Count>0)
+            if (Items.Count > 0)
             {
                 foreach (var item in Items)
                 {
-                    if (item!=null)
+                    if (item != null)
                     {
                         if (item.Name == name)
                         {
@@ -65,13 +61,11 @@ namespace ttc_wtc
                             return item;
                         }
                     }
-                   
                 }
             }
-           
             return null;
-
         }
+
         public void SelectTarot(int tarotNumber)
         {
             if (TarotNumber == -1)
@@ -119,9 +113,9 @@ namespace ttc_wtc
                             result.Add(item.Name);
                         }
                     }
-                    else if (item is Keys)
+                    else if (item is Key)
                     {
-                        if (slot == Keys.KeysSlot)
+                        if (slot == Key.KeySlot)
                         {
                             result.Add(item.Name);
                         }
@@ -139,9 +133,9 @@ namespace ttc_wtc
             {
                 foreach (Item item in Items)
                 {
-                    if (item is Keys)
+                    if (item is Key)
                     {
-                        if (slot ==Keys.KeysSlot)
+                        if (slot == Key.KeySlot)
                         {
                             slotItems.Add(item);
                         }
@@ -169,25 +163,18 @@ namespace ttc_wtc
             }
             else
             {
-
-                if (slot==Keys.KeysSlot)
+                if (slot == Key.KeySlot)
                 {
 
-                }   
-                    else if (slot == Consumable.ConsumableSlot)
-                    {
+                }
+                else if (slot == Consumable.ConsumableSlot)
+                {
                     ConsumableEffects.Effects[((Consumable)slotItems[choice - 1]).EffectNumber].Invoke(this);
                     DeleteItem(slotItems[choice - 1]);
                 }
-                    else EquippedItems[slot] = (Armor)slotItems[choice - 1];
-                
+                else EquippedItems[slot] = (Armor)slotItems[choice - 1];
             };
-
-               
-            }
-           
-
-        
+        }
 
         public void DeleteItem(Item item)
         {
@@ -230,6 +217,11 @@ namespace ttc_wtc
         public int CountDefense()
         {
             int defense = 0;
+            if (EquippedItems[0] != null)
+            {
+                Weapon weapon = EquippedItems[0] as Weapon;
+                defense += weapon.Defense;
+            }
             for (int i = 2; i < 5; i++)
             {
                 if (EquippedItems[i] != null)

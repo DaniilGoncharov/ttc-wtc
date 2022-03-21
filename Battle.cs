@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace ttc_wtc
 {
     class Battle
     {
-        public Player Player { get; set; }
-        public Entity[] Enemies { get; set; }
+        public Player Player { get; }
+        public Entity[] Enemies { get; }
         public Entity[] AliveEnemies { get; set; }
 
         public Battle(Player player, Entity[] enemies)
@@ -72,7 +68,7 @@ namespace ttc_wtc
                 }
                 Player.AbilityCD -= Player.AbilityCD == 0 ? 0 : 1;
                 UpdateAliveEnemies();
-                foreach(Enemy enemy in AliveEnemies)
+                foreach (Enemy enemy in AliveEnemies)
                 {
                     if (enemy.Stunned == 0)
                     {
@@ -88,7 +84,7 @@ namespace ttc_wtc
             {
                 Player.AbilityCD = 0;
                 Game.GameStatus = Game.Status.InGame;
-                foreach(Enemy enemy in Enemies)
+                foreach (Enemy enemy in Enemies)
                 {
                     CollectedMaps.DelEntity(enemy.MapId, enemy.X, enemy.Y);
                 }
@@ -102,7 +98,7 @@ namespace ttc_wtc
         public void UpdateAliveEnemies()
         {
             List<Entity> newAliveEnemies = new List<Entity>();
-            foreach(Enemy enemy in Enemies)
+            foreach (Enemy enemy in Enemies)
             {
                 if (enemy.Alive)
                 {

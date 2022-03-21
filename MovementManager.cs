@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ttc_wtc
+﻿namespace ttc_wtc
 {
     static class MovementManager
     {
@@ -17,7 +11,7 @@ namespace ttc_wtc
                 entity.X = 1;
                 entity.Y = 1;
                 entity.MapId = 0;
-                Program.CurrentGame.Player.EndlessLevel++;
+                Program.CurrentGame.player.EndlessLevel++;
                 CollectedMaps.EndlessInitialise();
                 CollectedMaps.SetEntity(entity.MapId, entity.X, entity.Y, entity);
                 return true;

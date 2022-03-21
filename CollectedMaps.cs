@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace ttc_wtc
 {
@@ -56,9 +52,9 @@ namespace ttc_wtc
         static public Point GetCornerCoords(int mapId)
         {
             char[,] map = AllMaps[mapId].drawnMap;
-            for(int i = map.GetLength(0) - 1; i > 0; i--)
+            for (int i = map.GetLength(0) - 1; i > 0; i--)
             {
-                for(int j = map.GetLength(1) - 1; j > 0; j--)
+                for (int j = map.GetLength(1) - 1; j > 0; j--)
                 {
                     if (map[i, j] != '#' && map[i, j] != 'C' && map[i, j] != ' ')
                     {
@@ -246,7 +242,7 @@ namespace ttc_wtc
             return AllMaps[mapId].Entities[x, y];
         }
 
-        public static Entity[] GetNearEntities(int mapId, int x, int y)
+        public static Entity[] GetNearEnemies(int mapId, int x, int y)
         {
             List<Entity> pResult = new List<Entity>();
             for (int i = -1; i < 2; i++)

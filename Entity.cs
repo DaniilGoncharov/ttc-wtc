@@ -1,21 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ttc_wtc
 {
-
-
     [Serializable]
     class Entity
 
     {
         public int Stunned { get; set; }
         public bool Alive { get; set; }
-        public char Symbol { get; set; }
-        public string Name { get; set; }
+        public char Symbol { get; }
+        public string Name { get; }
         public int X { get; set; }
         public int Y { get; set; }
         public int MapId { get; set; }
