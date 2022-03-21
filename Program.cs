@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace ttc_wtc
 {
@@ -9,6 +10,7 @@ namespace ttc_wtc
 
         static void Main(string[] args)
         {
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
             Console.Title = "Tokyo Tarot Cards : When They Cry";
             Console.CursorVisible = false;
             Console.SetWindowSize(90, 34);
@@ -29,20 +31,24 @@ namespace ttc_wtc
         public static List<Chest> GenerateStartChests()
         {
             List<Chest> chests = new List<Chest>();
+            Chest startItemChest = new Chest(1, 14, 3);
+            chests.Add(startItemChest);
             return chests;
         }
 
         public static List<Entity> GenerateStartEntities()
         {
             List<Entity> entities = new List<Entity>();
-            NPC npc1 = new NPC("Эрика", 20, 100, 22, 0, 3, 2, 'N',BasicDialogBuilder.EricastartDialogBuilder.dialog);
-            npc1.NPCInventory.Add(Item.OldKey);
-            NPC npc2 = new NPC("Чайка", 20, 10, 22, 1, 3, 2, 'U', BasicDialogBuilder.UminekoStartDialogBuilder.dialog);
-            npc2.NPCInventory.Add(Item.OldKey);
-            Enemy Volibir = new Enemy("Волибир", 100, 100, 10, 1, 5, 5);
-            entities.Add(Volibir);
-            entities.Add(npc1);
-            entities.Add(npc2);
+            NPC ErikaNPC = new NPC("Эрика", 20, 100, 22, 0, 8, 14, 'N',BasicDialogBuilder.EricastartDialogBuilder.dialog);
+            ErikaNPC.NPCInventory.Add(Item.OldKey);
+            NPC UminekoNPC = new NPC("Чайка", 20, 10, 22, 1, 12, 1, 'U', BasicDialogBuilder.UminekoStartDialogBuilder.dialog);
+            UminekoNPC.NPCInventory.Add(Item.OldKey);
+            Enemy Kalista = new Enemy("Калиста", 100, 345, 10, 2, 5, 5);
+            Enemy OldWarrior1 = new Enemy("Древний Воин", 100, 210, 10, 1, 8, 3); 
+            entities.Add(Kalista);
+            entities.Add(ErikaNPC);
+            entities.Add(UminekoNPC);
+            entities.Add(OldWarrior1);
             return entities;
         }
     }

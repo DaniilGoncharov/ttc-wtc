@@ -37,7 +37,7 @@ namespace ttc_wtc
         }
         static public void InitialiseClosedDour(int i) //Запись всех карт в allMaps (!!! стирает всю информацию с них, которая была записана во время выполнения)
         {
-            CollectedMaps.AllMaps[i].transitionCoords[2] = new Point(1, 1);
+            CollectedMaps.AllMaps[i].transitionCoords[2] = new Point(7, 7);
             CollectedMaps.AllMaps[i].transitionTo[7, 7] = 2;
             CollectedMaps.AllMaps[i].drawnMap[7, 7] = 'E';
         }

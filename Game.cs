@@ -38,7 +38,7 @@ namespace ttc_wtc
         public List<Chest> Chests;
         public NPC currentNPC;
         public bool mainQestisActive = true;
-
+        public bool supQestisActive = true;
         public static Status GameStatus { get; set; }
 
         public Game(Player player, List<Entity> entities = null, List<Chest> chests = null)
@@ -127,10 +127,11 @@ namespace ttc_wtc
             int moveY = 0;
             do
             {
-                if (Player.Have("Ключ от старых ворот"))
+                if (Player.Have("Ключ от старых ворот") && supQestisActive)
                 {
                     Player.QuestNumber = 2;
                     CollectedMaps.InitialiseClosedDour(0);
+                    supQestisActive = false;
                 }
                 switch (GameStatus)
                 {
@@ -199,10 +200,10 @@ namespace ttc_wtc
            
             Console.Clear();
             currentNPC = (NPC)CollectedMaps.GetEntity(Player.MapId, Player.X + moveX, Player.Y + moveY);
-            Quest.QestChecking(Player, currentNPC);
+            Quest.QestChecking(Player, currentNPC,Entities[0]);
             if (currentNPC.Dialog.GetDialog(currentNPC) == 0)
             {
-                if (currentNPC.Dialog.Completeness)
+                if (currentNPC.Dialog.Completeness && currentNPC.Name=="Эрика")
                 {
                     Player.QuestNumber = 1;
                 }
@@ -274,7 +275,7 @@ namespace ttc_wtc
             {
                 moveX = 0;
                 moveY = 0;
-                Draw.DrawMapInterface(Player, 53, 3);
+                Draw.DrawMapInterface(Player, 53, 3,endlessGame);
                 switch (Console.ReadKey(true).Key)
                 {
                     case ConsoleKey.Escape:
@@ -303,7 +304,7 @@ namespace ttc_wtc
                 {
                     CollectedMaps.EnemyMovement(Player.MapId, Player.X, Player.Y);
                 }             
-                if (Entities!=null&&!Entities[0].Alive&&mainQestisActive&&Entities[1].Alive)
+                if (Entities != null && !Entities[0].Alive && mainQestisActive && Entities[1].Alive)
                 {
                     Player.QuestNumber = 3;
                     Draw.ReDrawMap(CollectedMaps.GetDrawnMap(Player.MapId), Player.MapId);
@@ -329,9 +330,7 @@ namespace ttc_wtc
                         Entities.Add(vilianNPC);
                         CollectedMaps.SetEntity(vilianNPC.MapId, vilianNPC.X, vilianNPC.Y, vilianNPC);
                     }
-
                     CollectedMaps.EnemyMovement(Player.MapId, Player.X, Player.Y);
-
                 }
             } while (GameStatus == Status.InGame);
         }

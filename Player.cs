@@ -31,6 +31,7 @@ namespace ttc_wtc
             Quests.Add(Quest.secondQest);
             Quests.Add(Quest.thirdQest);
             Quests.Add(Quest.fourthQest);
+            Quests.Add(Quest.fiveQests);
             AbilityCD = 0;
 
         }
